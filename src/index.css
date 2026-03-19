@@ -193,7 +193,7 @@ h1, h2, .serif {
 
 .section-title {
   font-family: 'Kalissa', serif;
-  font-size: 80px;
+  font-size: 60px;
   text-align: center;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -308,26 +308,26 @@ section.dark-alt {
 
 .hero {
   position: relative;
-  min-height: 563px;
+  height: 100vh;
   aspect-ratio: 722 / 1100;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 2rem 1.5rem 3rem;
+  padding: 2rem 1.5rem 5px 3rem;
   overflow: hidden;
   width: 100%;
   max-width: 722px;
   margin: 0 auto;
+
 }
 
+
 @media (max-width: 767px) {
-  .hero {
-    padding-bottom: 0;
-  }
 
   .hero-content {
     margin-bottom: 1rem;
+    padding-bottom: 1rem;
   }
 
   .hero-bg-img {
@@ -336,7 +336,7 @@ section.dark-alt {
   }
 
   section.dark:first-of-type {
-    padding-top: 0;
+    padding-top: 70px;
   }
 }
 
@@ -389,6 +389,7 @@ section.dark-alt {
   display: flex;
   flex-direction: column;
   align-items: center;
+ 
 }
 
 .hero-names-connector {
@@ -397,6 +398,7 @@ section.dark-alt {
 }
 
 .hero-name-part {
+  padding: 5px;
   display: block;
   opacity: 0;
   transform: translateY(20px) scale(0.98);
@@ -482,6 +484,8 @@ font-size: 70px;
 
 /* Подпись "с любовью, Максим и Анастасия" в финальном блоке */
 .closing-love-text {
+  overflow: visible;
+  padding: 5px;
   font-family: 'Kindentosca', serif;
   font-size: 45px;
   line-height: 1.05;
@@ -1073,6 +1077,9 @@ padding-top: 10px;
 }
 
 @media (min-width: 1024px) {
+  .hero {
+    padding-bottom: 5rem;
+  }
   .timeline-title {
     font-size: 3.5rem;
   }
@@ -1356,7 +1363,7 @@ padding-top: 10px;
 
 .timeline-event-title {
   font-family: 'Kalissa', cursive;
-  font-size: 25px;
+  font-size: 26px;
   font-weight: 200;
   color: #1a1a1a;
 }
@@ -1402,6 +1409,8 @@ padding-top: 10px;
 
 /* Scroll reveal (плавное появление текстов по очереди) */
 .reveal-item {
+  padding: 5px;
+  overflow: visible;
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;

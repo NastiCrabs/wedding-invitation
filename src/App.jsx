@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import couplePhoto from './assets/photo.jpg'
 import heartSvg from './assets/heart.svg'
-/*import sticker from './assets/sticker.webp'*/
 import sticker2 from './assets/sticker2.webp'
 import sticker3 from './assets/sticker3.webp'
 import sticker4 from './assets/sticker4.webp'
@@ -175,7 +174,7 @@ function App() {
       {
         threshold: 0.05,
         // Включаемся, когда элемент поднимается в нижнюю треть экрана
-        rootMargin: '67% 0px 0px 0px',
+        rootMargin: '67px 0px 0px 0px',
       }
     )
 
@@ -507,8 +506,8 @@ function App() {
       </section>
 
       <section className="dark-alt">
-        <h2 className="section-title">Details</h2>
-        <ul className="details-list reveal-item" data-reveal-index="10">
+        <h2 className="section-title reveal-item" data-reveal-index="10">Details</h2>
+        <ul className="details-list reveal-item" data-reveal-index="11">
           <li>
             <span className="details-num">
             <img
@@ -522,7 +521,8 @@ function App() {
             <p>Чтобы наши руки были свободны для объятий, будем рады лёгким подаркам в конвертах — ваши тёплые пожелания помогут исполнить нашу заветную мечту</p>
           </li>
           <li>
-            <span className="details-num">            <img
+            <span className="details-num">       
+                   <img
                       src={heartSvg}
                       alt=""
                       className="timeline-love-heart-white"
@@ -532,7 +532,8 @@ function App() {
             <p>Если хотите добавить особый штрих, возьмите бутылочку вашего любимого напитка с маленьким пожеланием, на какой повод нам её открыть</p>
           </li>
           <li>
-            <span className="details-num">            <img
+            <span className="details-num">    
+                  <img
                       src={heartSvg}
                       alt=""
                       className="timeline-love-heart-white"
@@ -547,10 +548,10 @@ function App() {
         </div>
       </section>
       <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="11">
+        <h2 className="section-title reveal-item" data-reveal-index="12">
           Общий чат
         </h2>
-        <p className="invitation-text reveal-item" data-reveal-index="12">
+        <p className="invitation-text reveal-item" data-reveal-index="13">
         Этот день станет историей, которую мы будем вспоминать снова и снова.
 Присоединяйтесь к нашему Telegram-чату — там можно общаться, задавать вопросы,
 делиться фотографиями и моментами, из которых вместе сложатся самые тёплые воспоминания
@@ -565,7 +566,7 @@ function App() {
         </a>
       </section>
       <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="13">
+        <h2 className="section-title reveal-item" data-reveal-index="14">
           Анкета гостя
         </h2>
         <form className="rsvp-card" id="confirm" onSubmit={handleRsvpSubmit}>
@@ -748,30 +749,30 @@ function App() {
 
 
       <section className="dark-alt closing-section">
-        <h2 className="section-title reveal-item" data-reveal-index="14">
+        <h2 className="section-title reveal-item" data-reveal-index="15">
           Ждём вас!
         </h2>
         <p className="closing-love-text" style={{ fontStyle: 'italic' }}>
-          <span className="reveal-item closing-love-prefix" data-reveal-index="15">
+          <span className="reveal-item closing-love-prefix" data-reveal-index="16">
             с любовью,
           </span>
           <br />
           <span className="closing-love-family">
             <span
               className="reveal-item closing-love-name closing-love-name--max"
-              data-reveal-index="16"
+              data-reveal-index="17"
             >
               Максим
             </span>
             <span
               className="reveal-item closing-love-name closing-love-name--and"
-              data-reveal-index="17"
+              data-reveal-index="18"
             >
               и
             </span>
             <span
               className="reveal-item closing-love-name closing-love-name--anastasia"
-              data-reveal-index="18"
+              data-reveal-index="19"
             >
               Анастасия
             </span>
