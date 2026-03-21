@@ -10,14 +10,12 @@ import sticker7 from './assets/sticker7.webp'
 import glove from './assets/Glove.png'
 import location from './assets/Location.jpg'
 import photo2 from './assets/photo2.jpg'
+import timing from './assets/background.jpg'
+import sticker14 from './assets/sticker14.webp'
+import heartsBg from './assets/Backgrounds_Hearts.jpg'
 
 const RSVP_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbzf8eIl2MWF-8vcETEveiKXUTKGkwiRcy4MDEuPlbCe31gq4dXM__SA2D0J4hji7HiAXA/exec'
-
-// Вертикальная прямая линия по центру таймлайна
-const TIMELINE_VIEWBOX_HEIGHT = 2400
-const VIEWBOX_TOP_PAD = 60
-const TIMELINE_PATH = `M 150 0 L 150 ${TIMELINE_VIEWBOX_HEIGHT}`
 
 const attendanceLabels = {
   yes: 'Да, с удовольствием!',
@@ -82,14 +80,10 @@ function getCountdownParts() {
 }
 
 function App() {
-  const timelineRef = useRef(null)
-  const pathRef = useRef(null)
-  const pathWrapRef = useRef(null)
-  const timelineEventsRef = useRef(null)
   const closingImageRef = useRef(null)
   const introDateRef = useRef(null)
+  const closingWaitSectionRef = useRef(null)
   const nextGuestIdRef = useRef(2)
-  const [visibleIndices, setVisibleIndices] = useState(() => new Set())
   const [introDateVisible, setIntroDateVisible] = useState(false)
   const [isClosingImageVisible, setIsClosingImageVisible] = useState(false)
   const [countdown, setCountdown] = useState(() => getCountdownParts())
@@ -97,31 +91,6 @@ function App() {
   const [rsvpComment, setRsvpComment] = useState('')
   const [guests, setGuests] = useState(() => [createGuest(1)])
   const dressCodeStickers = [sticker2, sticker3, sticker4, sticker5, sticker6]
-
-  useEffect(() => {
-    const container = timelineEventsRef.current
-    if (!container) return
-    const children = Array.from(container.children)
-    if (!children.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const idx = entry.target.dataset.eventIndex
-          if (idx === undefined) return
-          const i = parseInt(idx, 10)
-          setVisibleIndices((prev) => new Set([...prev, i]))
-        })
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
-    )
-    children.forEach((el, i) => {
-      el.dataset.eventIndex = i
-      observer.observe(el)
-    })
-    return () => observer.disconnect()
-  }, [])
 
   useEffect(() => {
     const node = closingImageRef.current
@@ -194,19 +163,19 @@ function App() {
 
   const timelineEvents = [
     {
-      time: '14:30',
-      title: 'Для гостей',
+      time: '15:00',
+      title: 'Welcome',
       desc: 'Время пролетит легко за игристым и душевным общением с дорогими сердцу людьми',
       side: 'left',
     },
     {
-      time: '15:00',
+      time: '15:30',
       title: 'Церемония',
-      desc: 'Приготовьте носовые платочки — этот момент станет началом нашей общей истории, полной любви и эмоций',
+      desc: 'На всякий случай приготовьте носовые платочки для трогательного момента',
       side: 'right',
     },
     {
-      time: '17:00',
+      time: '16:00',
       title: 'Начало банкета',
       desc: 'Вкусные блюда, весёлая программа и искренние улыбки — всё, чтобы этот день стал незабываемым',
       side: 'left',
@@ -214,11 +183,10 @@ function App() {
     {
       time: '22:00',
       title: 'Завершение банкета',
-      desc: 'Спасибо, что были с нами, разделили радость и сделали этот день по-настоящему нашим',
+      desc: 'К сожалению, даже такой прекрасный вечер может закончиться',
       side: 'right',
     },
   ]
-  const loveLetters = ['L', 'O', 'V', 'E']
 
   const updateGuest = (guestId, updater) => {
     setGuests((prev) =>
@@ -322,6 +290,17 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    if (rsvpStatus !== 'success') return
+    const t = window.setTimeout(() => {
+      closingWaitSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 0)
+    return () => window.clearTimeout(t)
+  }, [rsvpStatus])
+
   return (
     <>
       <header className="hero">
@@ -352,6 +331,7 @@ function App() {
           aria-hidden
         >
           <img src={sticker7} alt="" className="intro-date-sticker" />
+          <img src={sticker14} alt="" className="timing-sticker15" />
           <span className="intro-date-pair intro-date-pair--1">08</span>
           <span className="intro-date-pair intro-date-pair--2">08</span>
           <span className="intro-date-pair intro-date-pair--3">26</span>
@@ -360,118 +340,48 @@ function App() {
           Дорогие родные и близкие!
         </h2>
         <p className="invitation-text reveal-item" data-reveal-index="1">
-          {`Мы давно ждали момента, когда сможем разделить с вами этот важный и счастливый день нашей жизни. Совсем скоро состоится наша свадьба! Мы рады пригласить вас стать свидетелями этого торжества и разделить с нами самые яркие моменты!`}
+          {`Наша история любви продолжается,
+и совсем скоро мы сделаем самый важный шаг — станем семьёй.
+Мы будем очень рады, если вы будете рядом
+и разделите с нами этот тёплый и счастливый день`}
         </p>
       </section>
+<section className="timing-section">
+  <div className="timing-wrap">
+    <img src={timing} alt="timing" className="timing-img" />
+    <img src={sticker14} alt="" className="timing-sticker14" />
 
-      <section className="timeline-section" ref={timelineRef}>
-        <svg aria-hidden="true" className="timeline-filters" width="0" height="0">
-          <defs>
-            <filter id="heartColor" x="-20%" y="-20%" width="140%" height="140%">
-              <feFlood result="c" floodColor="#580e1c" />
-              <feComposite in="c" in2="SourceAlpha" operator="in" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="timeline-header">
-          <h2 className="timeline-title reveal-item" data-reveal-index="2">
-            наш август
-          </h2>
-          <div className="date-row">
-            {[6, 7, 8, 9, 10].map((d) => (
-              d === 8 ? (
-                <div key={d} className="date-row-heart" aria-hidden>
-                  <img
-                    src={heartSvg}
-                    alt=""
-                    className="date-row-heart-img"
-                    width={96}
-                    height={96}
-                  />
-                  <span className="date-row-heart-num">8</span>
-                </div>
-              ) : (
-                <div
-                  key={d}
-                  className={`date-btn ${d === 6 || d === 10 ? 'date-btn-outer' : ''}`}
-                >
-                  {d}
-                </div>
-              )
-            ))}
-          </div>
+    <div className="timing-day-overlay" aria-hidden>
+      {timelineEvents.map((ev, index) => (
+        <div
+          className="timing-day-item reveal-item"
+          data-reveal-index={`timing-${index}`}
+          key={`${ev.time}-${index}`}
+        >
+          <div className="timing-day-time">{ev.time}</div>
+          <div className="timing-day-title">{ev.title}</div>
+          <div className="timing-day-desc">{ev.desc}</div>
+          {index < timelineEvents.length - 1 && (
+            <div className="timing-day-separator" aria-hidden />
+          )}
         </div>
-        <div className="timeline-path-wrap" ref={pathWrapRef}>
-          <svg
-            className="timeline-svg"
-            viewBox={`0 ${-VIEWBOX_TOP_PAD} 300 ${TIMELINE_VIEWBOX_HEIGHT + VIEWBOX_TOP_PAD}`}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <path
-              ref={pathRef}
-              className="timeline-path"
-              d={TIMELINE_PATH}
-              fill="none"
-            />
-          </svg>
-        </div>
-        <div className="timeline-events" ref={timelineEventsRef}>
-          {timelineEvents.map((ev, index) => (
-            <div
-              key={ev.time}
-              className={`timeline-row ${visibleIndices.has(index) ? 'timeline-row--visible' : ''}`}
-            >
-              {ev.side === 'left' && (
-                <div className="timeline-event timeline-event--left">
-                  <span className="timeline-event-time">{ev.time}</span>
-                  <div className="timeline-event-title-row">
-                    <h3 className="timeline-event-title">{ev.title}</h3>
-                  </div>
-                  <p className="timeline-event-desc">{ev.desc}</p>
-                </div>
-              )}
-
-              {loveLetters[index] && (
-                <div className="timeline-love-col">
-                  <span className="timeline-love-letter">{loveLetters[index]}</span>
-                  {index < loveLetters.length - 1 && (
-                    <img
-                      src={heartSvg}
-                      alt=""
-                      className="timeline-love-heart"
-                      width={18}
-                      height={18}
-                    />
-                  )}
-                </div>
-              )}
-
-              {ev.side === 'right' && (
-                <div className="timeline-event timeline-event--right">
-                  <span className="timeline-event-time">{ev.time}</span>
-                  <div className="timeline-event-title-row">
-                    <h3 className="timeline-event-title">{ev.title}</h3>
-                  </div>
-                  <p className="timeline-event-desc">{ev.desc}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="timeline-footer" aria-hidden />
-      </section>
+      ))}
+    </div>
+  </div>
+  
+</section>
 
       <section className="dark-alt location-section">
-        <h2 className="section-title reveal-item" data-reveal-index="3">
+        <h2 className="section-title reveal-item" data-reveal-index="2">
           Location
         </h2>
-        <p className="location-address reveal-item" data-reveal-index="4">
-        Наш свадебный день пройдет в прекрасном месте —
+        <p className="location-address reveal-item" data-reveal-index="3">
+        Торжество состоится в прекрасном месте —
 загородном комплексе «Мир у Озера»,
 где среди природы, уюта и близких людей начнётся наша семейная история
          
         </p>
-        <p className="location-address reveal-item" data-reveal-index="5">
+        <p className="location-address reveal-item" data-reveal-index="4">
 Санкт-Петербург, Ленинградское шоссе, 81
          
         </p>
@@ -484,7 +394,7 @@ function App() {
       </section>
 
       <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="6">
+        <h2 className="section-title reveal-item" data-reveal-index="5">
           Dress code
         </h2>
         <div className="dress-code-stickers">
@@ -492,22 +402,22 @@ function App() {
             <img key={index} src={item} alt={`Стикер dress code ${index + 1}`} />
           ))}
         </div>
-        <p className="invitation-text reveal-item" data-reveal-index="7">
+        <p className="invitation-text reveal-item" data-reveal-index="6">
         Мы будем рады, если вы поддержите стиль нашего праздника и выберете образы в стиле Total Black
 
         </p>
-        <p className="invitation-text reveal-item" data-reveal-index="8">
-        По желанию можно добавить изящный красный акцент — помада, украшение, сумка или туфли
+        <p className="invitation-text reveal-item" data-reveal-index="7">
+        По желанию можно добавить изящный красный акцент — помада, украшение, сумка или туфли.
 Маленькая деталь, которая сделает Ваш образ особенным
         </p>
-        <p className="invitation-text reveal-item" data-reveal-index="9">
-        Для нас, жениха и невесты, белый — символ этого праздника. Мы будем рады, если он будет только с нами
+        <p className="invitation-text reveal-item" data-reveal-index="8">
+        Для нас белый цвет в этот день особенно важен и символичен. Будем благодарны, если вы оставите его для наших образов
         </p>
       </section>
 
       <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="10">Details</h2>
-        <ul className="details-list reveal-item" data-reveal-index="11">
+        <h2 className="section-title reveal-item" data-reveal-index="9">Details</h2>
+        <ul className="details-list reveal-item" data-reveal-index="10">
           <li>
             <span className="details-num">
             <img
@@ -548,10 +458,10 @@ function App() {
         </div>
       </section>
       <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="12">
+        <h2 className="section-title reveal-item" data-reveal-index="11">
           Общий чат
         </h2>
-        <p className="invitation-text reveal-item" data-reveal-index="13">
+        <p className="invitation-text reveal-item" data-reveal-index="12">
         Этот день станет историей, которую мы будем вспоминать снова и снова.
 Присоединяйтесь к нашему Telegram-чату — там можно общаться, задавать вопросы,
 делиться фотографиями и моментами, из которых вместе сложатся самые тёплые воспоминания
@@ -565,15 +475,20 @@ function App() {
           присоединиться
         </a>
       </section>
-      <section className="dark-alt">
-        <h2 className="section-title reveal-item" data-reveal-index="14">
+      <section id="rsvp" className="dark-alt rsvp-section">
+        <h2 className="section-title reveal-item" data-reveal-index="13">
           Анкета гостя
         </h2>
-        <form className="rsvp-card" id="confirm" onSubmit={handleRsvpSubmit}>
+        <form
+          className="rsvp-card rsvp-card--hearts"
+          id="confirm"
+          onSubmit={handleRsvpSubmit}
+          style={{ '--rsvp-hearts-bg': `url(${heartsBg})` }}
+        >
           <p className="rsvp-intro">
             Просим подтвердить своё присутствие
             <br />
-            до 01.08.2026
+            до 01.07.2026
           </p>
 
           <div className="rsvp-divider" />
@@ -748,31 +663,31 @@ function App() {
 
 
 
-      <section className="dark-alt closing-section">
-        <h2 className="section-title reveal-item" data-reveal-index="15">
+      <section ref={closingWaitSectionRef} className="dark-alt closing-section">
+        <h2 className="section-title reveal-item" data-reveal-index="14">
           Ждём вас!
         </h2>
         <p className="closing-love-text" style={{ fontStyle: 'italic' }}>
-          <span className="reveal-item closing-love-prefix" data-reveal-index="16">
+          <span className="reveal-item closing-love-prefix" data-reveal-index="15">
             с любовью,
           </span>
           <br />
           <span className="closing-love-family">
             <span
               className="reveal-item closing-love-name closing-love-name--max"
-              data-reveal-index="17"
+              data-reveal-index="16"
             >
               Максим
             </span>
             <span
               className="reveal-item closing-love-name closing-love-name--and"
-              data-reveal-index="18"
+              data-reveal-index="17"
             >
               и
             </span>
             <span
               className="reveal-item closing-love-name closing-love-name--anastasia"
-              data-reveal-index="19"
+              data-reveal-index="18"
             >
               Анастасия
             </span>
@@ -809,6 +724,8 @@ function App() {
             <div className="closing-timer-date">08.08.2026 15:00</div>
           </div>
           <img src={glove} alt="" />
+          <img src={sticker14} alt="" className="timing-sticker16" />
+          
         </div>
       </section>
     </>
