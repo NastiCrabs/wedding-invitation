@@ -463,11 +463,11 @@ function App() {
         </h2>
         <p className="invitation-text reveal-item" data-reveal-index="12">
         Этот день станет историей, которую мы будем вспоминать снова и снова.
-Присоединяйтесь к нашему Telegram-чату — там можно общаться, задавать вопросы,
+Присоединяйтесь к нашему чату ВКонтакте— там можно общаться, задавать вопросы,
 делиться фотографиями и моментами, из которых вместе сложатся самые тёплые воспоминания
         </p>
         <a
-          href="https://t.me/+Mi6tcD-aTN5mMDhi"
+          href="https://vk.me/join/V0YZJgjolJ3nWOue0g3vPIjgxDoumHRvPYM="
           target="_blank"
           rel="noopener noreferrer"
           className="btn"
